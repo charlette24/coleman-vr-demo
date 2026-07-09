@@ -243,6 +243,11 @@ const el = {
   walkthroughList: document.getElementById("walkthrough-list"),
   cityMap: document.getElementById("city-map"),
   mapStoryChip: document.getElementById("map-story-chip"),
+  playerQuestTitle: document.getElementById("player-quest-title"),
+  playerXp: document.getElementById("player-xp"),
+  playerStreak: document.getElementById("player-streak"),
+  playerObjective: document.getElementById("player-objective"),
+  playerRewardOdds: document.getElementById("player-reward-odds"),
   povViewport: document.getElementById("player-pov-viewport"),
   povTitle: document.getElementById("pov-title"),
   povDevice: document.getElementById("pov-device"),
@@ -252,6 +257,12 @@ const el = {
   povHighlightA: document.getElementById("pov-highlight-a"),
   povHighlightB: document.getElementById("pov-highlight-b"),
   povHighlightC: document.getElementById("pov-highlight-c"),
+  rewardOverlayTitle: document.getElementById("reward-overlay-title"),
+  rewardOverlayCopy: document.getElementById("reward-overlay-copy"),
+  rewardOverlayHeadline: document.getElementById("reward-overlay-headline"),
+  rewardOverlayBody: document.getElementById("reward-overlay-body"),
+  rewardOverlayChipA: document.getElementById("reward-overlay-chip-a"),
+  rewardOverlayChipB: document.getElementById("reward-overlay-chip-b"),
 };
 
 function createVoucherCode(locationKey, sponsorLabel) {
@@ -264,6 +275,11 @@ function createVoucherCode(locationKey, sponsorLabel) {
 function renderPlayerPov(pov) {
   el.cityMap.dataset.scene = pov.scene;
   el.mapStoryChip.textContent = pov.mapStory;
+  el.playerQuestTitle.textContent = pov.questTitle;
+  el.playerXp.textContent = pov.xp;
+  el.playerStreak.textContent = pov.streak;
+  el.playerObjective.textContent = pov.objective;
+  el.playerRewardOdds.textContent = pov.rewardOdds;
   el.povViewport.dataset.scene = pov.scene;
   el.povTitle.textContent = pov.title;
   el.povDevice.textContent = pov.device;
@@ -273,6 +289,12 @@ function renderPlayerPov(pov) {
   el.povHighlightA.textContent = pov.highlightA;
   el.povHighlightB.textContent = pov.highlightB;
   el.povHighlightC.textContent = pov.highlightC;
+  el.rewardOverlayTitle.textContent = pov.walletTitle;
+  el.rewardOverlayCopy.textContent = pov.walletCopy;
+  el.rewardOverlayHeadline.textContent = pov.overlayHeadline;
+  el.rewardOverlayBody.textContent = pov.overlayBody;
+  el.rewardOverlayChipA.textContent = pov.overlayChipA;
+  el.rewardOverlayChipB.textContent = pov.overlayChipB;
 }
 
 function buildWalkthroughSteps(locationKey) {
@@ -302,6 +324,17 @@ function buildWalkthroughSteps(locationKey) {
         highlightB: "Spatial scan warming up",
         highlightC: "Prize still concealed",
         mapStory: "Ava is scanning the district for the first cache signal",
+        questTitle: data.title,
+        xp: "2,450 XP",
+        streak: "7-day streak",
+        objective: "Move toward the first signal spike",
+        rewardOdds: data.rarity,
+        walletTitle: `${data.rewardTitle} is in the live drop pool`,
+        walletCopy: "Get close enough to unlock the portal and move this reward into Ava's wallet.",
+        overlayHeadline: "Signal acquired",
+        overlayBody: "Ava is close, but the prize stays hidden until the cache fully unlocks.",
+        overlayChipA: "Live geofence",
+        overlayChipB: "Prize concealed",
       },
     },
     {
@@ -327,6 +360,17 @@ function buildWalkthroughSteps(locationKey) {
         highlightB: "Route confidence rising",
         highlightC: "Branded cache warming up",
         mapStory: "The route narrows as Ava moves into the live geofence",
+        questTitle: data.title,
+        xp: "2,475 XP",
+        streak: "Combo x2",
+        objective: "Step into the bright signal corridor",
+        rewardOdds: data.rarity,
+        walletTitle: `${data.rewardTitle} is almost revealed`,
+        walletCopy: "Ava is close enough for the platform to reserve the prize and prep the reveal.",
+        overlayHeadline: "Approaching reward zone",
+        overlayBody: "The game is now validating motion, location, and anti-spoof signals.",
+        overlayChipA: "Player verified",
+        overlayChipB: "Reveal primed",
       },
     },
     {
@@ -352,6 +396,17 @@ function buildWalkthroughSteps(locationKey) {
         highlightB: "3D anchor snapped",
         highlightC: "Interaction prompt armed",
         mapStory: "The map locks to the exact cache location in front of Ava",
+        questTitle: data.title,
+        xp: "2,520 XP",
+        streak: "Cache chain active",
+        objective: "Tap the cache to open the prize portal",
+        rewardOdds: data.rarity,
+        walletTitle: "Cache visual anchored in Ava's world",
+        walletCopy: "The SDK has now placed the branded object in a real, interactable spot in front of the player.",
+        overlayHeadline: "Cache in range",
+        overlayBody: "Ava can now open the cache and trigger the sponsor reveal.",
+        overlayChipA: "3D object live",
+        overlayChipB: "Tap to open",
       },
     },
     {
@@ -377,6 +432,17 @@ function buildWalkthroughSteps(locationKey) {
         highlightB: "Telemetry capture live",
         highlightC: "Reward reveal unfolding",
         mapStory: "Ava reaches the cache and triggers the live reward portal",
+        questTitle: data.title,
+        xp: "2,590 XP",
+        streak: "Legendary reveal",
+        objective: "Hold position while the prize reveal finishes",
+        rewardOdds: "Guaranteed win",
+        walletTitle: `${data.rewardTitle} is being reserved now`,
+        walletCopy: "The game is resolving the reveal and binding the win to Ava's identity and sponsor campaign.",
+        overlayHeadline: "Portal opened",
+        overlayBody: "The branded reward sequence is live, with analytics and attribution firing in the background.",
+        overlayChipA: "Sponsor tagged",
+        overlayChipB: "Reveal live",
       },
     },
     {
@@ -402,6 +468,17 @@ function buildWalkthroughSteps(locationKey) {
         highlightB: "Wallet updated",
         highlightC: "Sponsor conversion recorded",
         mapStory: "The hunt completes and the reward moves into Ava's wallet",
+        questTitle: `${data.title} complete`,
+        xp: "2,740 XP",
+        streak: "Victory bonus",
+        objective: "Claim prize and share the win",
+        rewardOdds: "Win secured",
+        walletTitle: `${data.rewardTitle} added to Ava's wallet`,
+        walletCopy: "The prize is now claimable, and the sponsor sees the conversion instantly in the campaign dashboard.",
+        overlayHeadline: "Prize added to wallet",
+        overlayBody: "Ava gets her voucher instantly, feels the payoff immediately, and the sponsor sees a measurable conversion.",
+        overlayChipA: "Voucher issued",
+        overlayChipB: "Wallet synced",
       },
     },
   ];
@@ -551,6 +628,17 @@ function renderLocation(locationKey) {
     highlightB: "Geofence listening",
     highlightC: "Reward hidden until unlock",
     mapStory: "Ava is scanning a live district hunt",
+    questTitle: data.title,
+    xp: "2,450 XP",
+    streak: "7-day streak",
+    objective: "Move toward the first signal spike",
+    rewardOdds: data.rarity,
+    walletTitle: `${data.rewardTitle} is waiting in the reward pool`,
+    walletCopy: "Start the walkthrough to see how the prize moves from hidden inventory to a real player claim.",
+    overlayHeadline: "Ready to start",
+    overlayBody: "Press the winning journey button to see the hunt, reveal, and prize claim unfold.",
+    overlayChipA: "AR ready",
+    overlayChipB: "Live campaign",
   });
   renderWalkthroughPanel();
 }

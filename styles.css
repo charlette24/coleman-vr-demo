@@ -480,10 +480,104 @@ h4 {
   border: 1px solid var(--line);
 }
 
+.phone-demo-shell {
+  position: relative;
+  margin: 20px 0 16px;
+  padding: 16px 16px 14px;
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(22, 34, 49, 0.98), rgba(8, 14, 24, 0.98)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 28px 56px rgba(0, 0, 0, 0.32);
+}
+
+.phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 148px;
+  height: 28px;
+  transform: translateX(-50%);
+  border-radius: 0 0 18px 18px;
+  background: rgba(5, 9, 16, 0.96);
+  z-index: 4;
+}
+
+.phone-demo-screen {
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(10, 18, 29, 0.8), rgba(6, 11, 19, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.phone-statusbar,
+.phone-playerbar,
+.player-identity,
+.player-wallet-mini,
+.phone-action-strip,
+.reward-overlay-meta {
+  display: flex;
+}
+
+.phone-statusbar,
+.phone-playerbar,
+.phone-action-strip {
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.phone-statusbar {
+  padding: 14px 18px 10px;
+  color: rgba(229, 241, 255, 0.78);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.phone-playerbar {
+  align-items: center;
+  padding: 0 18px 14px;
+}
+
+.player-identity {
+  align-items: center;
+  gap: 12px;
+}
+
+.player-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #031018;
+  background: linear-gradient(135deg, var(--aqua), #d8fff5);
+  box-shadow: 0 12px 24px rgba(99, 246, 214, 0.24);
+}
+
+.player-wallet-mini {
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 8px;
+}
+
+.mini-stat {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 .player-pov-viewport {
   position: relative;
   min-height: 390px;
-  margin: 20px 0 16px;
+  margin: 0 12px 12px;
   overflow: hidden;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -750,6 +844,47 @@ h4 {
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
+.pov-reward-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  background: radial-gradient(circle at center, rgba(7, 17, 31, 0.08), rgba(7, 17, 31, 0.52));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: 3;
+}
+
+.reward-overlay-card {
+  width: min(100%, 320px);
+  padding: 22px;
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(12, 24, 39, 0.96), rgba(9, 18, 31, 0.92)),
+    radial-gradient(circle at top right, rgba(255, 199, 101, 0.14), transparent 36%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
+  text-align: left;
+}
+
+.reward-overlay-card h4 {
+  margin: 8px 0 8px;
+  font-size: 1.3rem;
+}
+
+.reward-overlay-card p:not(.metric-label) {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.reward-overlay-meta {
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
 .pov-reward-panel {
   left: 22px;
   right: 22px;
@@ -817,6 +952,28 @@ h4 {
   flex-wrap: wrap;
 }
 
+.phone-action-strip {
+  padding: 0 14px 14px;
+}
+
+.action-card {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.action-card.compact {
+  flex: 0.68;
+}
+
+.action-card h4 {
+  margin-top: 6px;
+  font-size: 1rem;
+}
+
 .player-pov-viewport[data-scene="scan"] .pov-cache-glow {
   opacity: 0.16;
 }
@@ -882,6 +1039,10 @@ h4 {
 
 .player-pov-viewport[data-scene="reward"] .pov-prize-shell {
   transform: translateX(-50%) translateY(-12px) scale(1.04);
+}
+
+.player-pov-viewport[data-scene="reward"] .pov-reward-overlay {
+  opacity: 1;
 }
 
 .player-pov-viewport[data-scene="reward"] .pov-reticle,
