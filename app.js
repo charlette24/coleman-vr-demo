@@ -193,6 +193,9 @@ const state = {
   activeTab: "player",
   activeLocation: "seattle",
   snippetIndex: 0,
+  walkthroughStepIndex: 0,
+  walkthroughPlaying: false,
+  walkthroughTimer: null,
 };
 
 const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
@@ -233,7 +236,171 @@ const el = {
   socialShares: document.getElementById("social-shares"),
   timelineList: document.getElementById("timeline-list"),
   sdkSnippet: document.getElementById("sdk-snippet"),
+  walkthroughHeadline: document.getElementById("walkthrough-headline"),
+  walkthroughSummary: document.getElementById("walkthrough-summary"),
+  walkthroughStage: document.getElementById("walkthrough-stage"),
+  walkthroughCurrentStep: document.getElementById("walkthrough-current-step"),
+  walkthroughList: document.getElementById("walkthrough-list"),
 };
+
+function createVoucherCode(locationKey, sponsorLabel) {
+  const locationCode = locationKey.slice(0, 3).toUpperCase();
+  const sponsorCode = sponsorLabel.replace("Sponsored by ", "").slice(0, 2).toUpperCase();
+  const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `CVR-${locationCode}-${sponsorCode}-${random}`;
+}
+
+function buildWalkthroughSteps(locationKey) {
+  const data = locations[locationKey];
+
+  return [
+    {
+      title: "Player spots a live hunt",
+      detail: `Ava opens Coleman VR on ${data.mode.toLowerCase()} and sees ${data.title} trending nearby.`,
+      distance: data.distance,
+      entry: 28,
+      cache: 8,
+      geofenceStatus: "Player is outside the active zone",
+      geofenceCopy:
+        "The engine starts warming up device signals, route context, and anti-spoof scoring before the player arrives.",
+      rewardCopy: "Prize inventory stays hidden until the player proves they are physically present in the zone.",
+      current: "Ava opens the app and picks a nearby hunt.",
+    },
+    {
+      title: "Geofence confidence rises",
+      detail: "As Ava walks in, GPS, motion, and anchor checks converge and the hunt becomes unlock-ready.",
+      distance: "12 meters",
+      entry: 74,
+      cache: 34,
+      geofenceStatus: "Cross-signal geofence verification in progress",
+      geofenceCopy:
+        "The platform blends live device telemetry and world anchors to confirm the player is genuinely on-site.",
+      rewardCopy: "The reward pool is reserved but still concealed until the final proximity threshold is met.",
+      current: "Ava approaches the cache and the zone begins validating her location.",
+    },
+    {
+      title: "The 3D cache materializes",
+      detail: "A portal blooms into view and the player can tap or gesture to open the cache reveal sequence.",
+      distance: "3 meters",
+      entry: 96,
+      cache: 79,
+      geofenceStatus: "Verified player presence. Cache reveal armed.",
+      geofenceCopy:
+        "Once confidence crosses the threshold, the SDK triggers the branded 3D cache inside mobile AR or VR.",
+      rewardCopy: "The sponsor reveal is now fully interactive, with telemetry firing for dwell time and engagement.",
+      current: "Ava sees the floating cache appear in front of her.",
+    },
+    {
+      title: "Prize reveal lands",
+      detail: `A branded animation resolves and Ava wins the featured reward: ${data.rewardTitle}.`,
+      distance: "0 meters",
+      entry: 100,
+      cache: 100,
+      geofenceStatus: "Cache opened. Reward reveal completed.",
+      geofenceCopy:
+        "The reward engine now records a verified unlock event tied to location, device type, and campaign metadata.",
+      rewardCopy: `The system reveals ${data.rewardTitle} and tags the claim to ${data.sponsor} for ROI reporting.`,
+      current: `Ava wins ${data.rewardTitle} in the live reveal.`,
+    },
+    {
+      title: "Voucher and analytics are issued",
+      detail: "A redeemable claim code is generated instantly and sponsor analytics register a full-funnel conversion.",
+      distance: "0 meters",
+      entry: 100,
+      cache: 100,
+      geofenceStatus: "Claim verified and handed to the prize API.",
+      geofenceCopy:
+        "The claim is signed, attached to the player session, and synchronized to sponsor dashboards in real time.",
+      rewardCopy: "A redeemable voucher now sits in the player's wallet and the sponsor sees the conversion immediately.",
+      current: "Ava receives her voucher and the sponsor gets a measurable win.",
+    },
+  ];
+}
+
+function stopWalkthrough() {
+  if (state.walkthroughTimer) {
+    window.clearTimeout(state.walkthroughTimer);
+    state.walkthroughTimer = null;
+  }
+  state.walkthroughPlaying = false;
+}
+
+function renderWalkthroughPanel() {
+  const steps = buildWalkthroughSteps(state.activeLocation);
+  const activeStep = steps[state.walkthroughStepIndex];
+
+  el.walkthroughHeadline.textContent = `See a player complete ${locations[state.activeLocation].title}`;
+  el.walkthroughSummary.textContent =
+    "Use this scripted investor flow to show how one user moves from map discovery to sponsor redemption in under a minute.";
+  el.walkthroughStage.textContent = `Stage ${state.walkthroughStepIndex + 1} of ${steps.length}`;
+  el.walkthroughCurrentStep.textContent = activeStep.current;
+  el.walkthroughList.innerHTML = steps
+    .map(
+      (step, index) => `
+        <article class="walkthrough-item ${index === state.walkthroughStepIndex ? "active" : ""} ${
+          index < state.walkthroughStepIndex ? "completed" : ""
+        }">
+          <div class="walkthrough-step-top">
+            <span class="walkthrough-step-index">0${index + 1}</span>
+            <span class="chip ${index === state.walkthroughStepIndex ? "chip-live" : ""}">${step.title}</span>
+          </div>
+          <h4>${step.title}</h4>
+          <p>${step.detail}</p>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function applyWalkthroughStep(step) {
+  el.distance.textContent = step.distance;
+  el.entryPercent.textContent = `${step.entry}%`;
+  el.entryFill.style.width = `${step.entry}%`;
+  el.cachePercent.textContent = `${step.cache}%`;
+  el.cacheFill.style.width = `${step.cache}%`;
+  el.geofenceStatus.textContent = step.geofenceStatus;
+  el.geofenceCopy.textContent = step.geofenceCopy;
+  el.rewardCopy.textContent = step.rewardCopy;
+
+  if (state.walkthroughStepIndex < 4) {
+    el.voucherCode.textContent = "Voucher pending";
+  }
+
+  if (state.walkthroughStepIndex === 4) {
+    const rewardData = locations[state.activeLocation];
+    const code = createVoucherCode(state.activeLocation, rewardData.sponsor);
+    el.voucherCode.textContent = `Voucher issued: ${code}`;
+    el.heroClaims.textContent = "76%";
+  }
+}
+
+function resetWalkthrough() {
+  stopWalkthrough();
+  state.walkthroughStepIndex = 0;
+  renderLocation(state.activeLocation);
+}
+
+function runWalkthroughStep(index) {
+  const steps = buildWalkthroughSteps(state.activeLocation);
+  state.walkthroughStepIndex = index;
+  renderWalkthroughPanel();
+  applyWalkthroughStep(steps[index]);
+
+  if (index === steps.length - 1) {
+    state.walkthroughPlaying = false;
+    state.walkthroughTimer = null;
+    return;
+  }
+
+  state.walkthroughTimer = window.setTimeout(() => runWalkthroughStep(index + 1), 1500);
+}
+
+function playWalkthrough() {
+  stopWalkthrough();
+  state.walkthroughPlaying = true;
+  switchTab("player");
+  runWalkthroughStep(0);
+}
 
 function switchTab(tab) {
   state.activeTab = tab;
@@ -249,7 +416,9 @@ function switchTab(tab) {
 }
 
 function renderLocation(locationKey) {
+  stopWalkthrough();
   state.activeLocation = locationKey;
+  state.walkthroughStepIndex = 0;
   const data = locations[locationKey];
 
   hotspots.forEach((hotspot) => {
@@ -279,6 +448,7 @@ function renderLocation(locationKey) {
   el.voucherRedemption.textContent = data.analytics.redemption;
   el.dwellTime.textContent = data.analytics.dwell;
   el.socialShares.textContent = data.analytics.shares;
+  renderWalkthroughPanel();
 }
 
 function renderInventory() {
@@ -326,10 +496,8 @@ function renderSnippet() {
 
 function generateVoucher() {
   const active = locations[state.activeLocation];
-  const locationCode = state.activeLocation.slice(0, 3).toUpperCase();
-  const sponsorCode = active.sponsor.replace("Sponsored by ", "").slice(0, 2).toUpperCase();
-  const random = Math.random().toString(36).slice(2, 8).toUpperCase();
-  el.voucherCode.textContent = `Voucher issued: CVR-${locationCode}-${sponsorCode}-${random}`;
+  const code = createVoucherCode(state.activeLocation, active.sponsor);
+  el.voucherCode.textContent = `Voucher issued: ${code}`;
   el.heroClaims.textContent = "76%";
 }
 
@@ -354,11 +522,17 @@ radarPins.forEach((pin) => {
 });
 
 document.getElementById("launch-demo").addEventListener("click", () => {
-  switchTab("player");
   document.getElementById("experience").scrollIntoView({ behavior: "smooth", block: "start" });
+  window.setTimeout(playWalkthrough, 250);
+});
+document.getElementById("hero-player-journey").addEventListener("click", () => {
+  document.getElementById("experience").scrollIntoView({ behavior: "smooth", block: "start" });
+  window.setTimeout(playWalkthrough, 250);
 });
 
 document.getElementById("claim-reward").addEventListener("click", generateVoucher);
+document.getElementById("play-walkthrough").addEventListener("click", playWalkthrough);
+document.getElementById("reset-walkthrough").addEventListener("click", resetWalkthrough);
 document.getElementById("cycle-snippet").addEventListener("click", () => {
   state.snippetIndex = (state.snippetIndex + 1) % snippets.length;
   renderSnippet();

@@ -43,7 +43,7 @@
               experiences into an open SDK and geofencing engine built for massive concurrency.
             </p>
             <div class="hero-actions">
-              <button class="primary-button" data-target-tab="player">Show player journey</button>
+              <button class="primary-button" id="hero-player-journey">Show player journey</button>
               <button class="secondary-button" data-target-tab="sdk">Show SDK + APIs</button>
             </div>
             <ul class="hero-points">
@@ -187,6 +187,24 @@
                   </div>
 
                   <div class="panel surface-side">
+                    <div class="side-card walkthrough-card">
+                      <p class="panel-label">Investor walkthrough</p>
+                      <h3 id="walkthrough-headline">Watch one player discover, unlock, and win</h3>
+                      <p id="walkthrough-summary">
+                        Run a guided story that simulates a real user moving into the geofence,
+                        opening the cache, and receiving a sponsor-backed prize voucher.
+                      </p>
+                      <div class="walkthrough-actions">
+                        <button class="primary-button" id="play-walkthrough">Play winning journey</button>
+                        <button class="secondary-button" id="reset-walkthrough">Reset demo</button>
+                      </div>
+                      <div class="walkthrough-banner">
+                        <span class="chip chip-live" id="walkthrough-stage">Stage 1 of 5</span>
+                        <span class="walkthrough-current" id="walkthrough-current-step">Ava opens the app and picks a nearby hunt.</span>
+                      </div>
+                      <div class="walkthrough-list" id="walkthrough-list"></div>
+                    </div>
+
                     <div class="side-card">
                       <p class="panel-label">Geofence engine</p>
                       <h3 id="geofence-status">Ready to unlock the waterfront portal</h3>

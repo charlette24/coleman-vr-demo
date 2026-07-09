@@ -565,6 +565,77 @@ h4 {
   margin: 12px 0 10px;
 }
 
+.walkthrough-card {
+  background:
+    linear-gradient(180deg, rgba(12, 29, 50, 0.92), rgba(8, 21, 38, 0.88)),
+    radial-gradient(circle at top left, rgba(88, 199, 255, 0.16), transparent 38%);
+}
+
+.walkthrough-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 18px 0 16px;
+}
+
+.walkthrough-banner {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.walkthrough-current {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.walkthrough-list {
+  display: grid;
+  gap: 12px;
+}
+
+.walkthrough-item {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.walkthrough-item.active {
+  border-color: rgba(99, 246, 214, 0.4);
+  background: linear-gradient(135deg, rgba(99, 246, 214, 0.12), rgba(88, 199, 255, 0.08));
+  transform: translateY(-1px);
+}
+
+.walkthrough-item.completed {
+  border-color: rgba(255, 199, 101, 0.24);
+}
+
+.walkthrough-step-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.walkthrough-step-index {
+  color: var(--gold);
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+  font-size: 0.8rem;
+}
+
+.walkthrough-item h4 {
+  margin-bottom: 6px;
+}
+
+.walkthrough-item p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .progress-stack {
   display: grid;
   gap: 16px;
@@ -838,7 +909,8 @@ h4 {
   .tab-list,
   .map-footer,
   .analytics-grid,
-  .architecture-flow {
+  .architecture-flow,
+  .walkthrough-actions {
     display: grid;
   }
 
