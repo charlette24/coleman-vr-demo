@@ -241,6 +241,8 @@ const el = {
   walkthroughStage: document.getElementById("walkthrough-stage"),
   walkthroughCurrentStep: document.getElementById("walkthrough-current-step"),
   walkthroughList: document.getElementById("walkthrough-list"),
+  cityMap: document.getElementById("city-map"),
+  mapStoryChip: document.getElementById("map-story-chip"),
   povViewport: document.getElementById("player-pov-viewport"),
   povTitle: document.getElementById("pov-title"),
   povDevice: document.getElementById("pov-device"),
@@ -260,6 +262,8 @@ function createVoucherCode(locationKey, sponsorLabel) {
 }
 
 function renderPlayerPov(pov) {
+  el.cityMap.dataset.scene = pov.scene;
+  el.mapStoryChip.textContent = pov.mapStory;
   el.povViewport.dataset.scene = pov.scene;
   el.povTitle.textContent = pov.title;
   el.povDevice.textContent = pov.device;
@@ -297,6 +301,7 @@ function buildWalkthroughSteps(locationKey) {
         highlightA: "Camera feed enhanced",
         highlightB: "Spatial scan warming up",
         highlightC: "Prize still concealed",
+        mapStory: "Ava is scanning the district for the first cache signal",
       },
     },
     {
@@ -321,6 +326,7 @@ function buildWalkthroughSteps(locationKey) {
         highlightA: "Motion verified",
         highlightB: "Route confidence rising",
         highlightC: "Branded cache warming up",
+        mapStory: "The route narrows as Ava moves into the live geofence",
       },
     },
     {
@@ -345,6 +351,7 @@ function buildWalkthroughSteps(locationKey) {
         highlightA: "Geofence validated",
         highlightB: "3D anchor snapped",
         highlightC: "Interaction prompt armed",
+        mapStory: "The map locks to the exact cache location in front of Ava",
       },
     },
     {
@@ -369,6 +376,7 @@ function buildWalkthroughSteps(locationKey) {
         highlightA: "Branded 3D effect",
         highlightB: "Telemetry capture live",
         highlightC: "Reward reveal unfolding",
+        mapStory: "Ava reaches the cache and triggers the live reward portal",
       },
     },
     {
@@ -393,6 +401,7 @@ function buildWalkthroughSteps(locationKey) {
         highlightA: "Voucher issued",
         highlightB: "Wallet updated",
         highlightC: "Sponsor conversion recorded",
+        mapStory: "The hunt completes and the reward moves into Ava's wallet",
       },
     },
   ];
@@ -541,6 +550,7 @@ function renderLocation(locationKey) {
     highlightA: "Nearby hunt loaded",
     highlightB: "Geofence listening",
     highlightC: "Reward hidden until unlock",
+    mapStory: "Ava is scanning a live district hunt",
   });
   renderWalkthroughPanel();
 }

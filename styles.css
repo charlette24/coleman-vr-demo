@@ -482,25 +482,32 @@ h4 {
 
 .player-pov-viewport {
   position: relative;
-  min-height: 330px;
+  min-height: 390px;
   margin: 20px 0 16px;
   overflow: hidden;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(circle at 50% 32%, rgba(99, 246, 214, 0.08), transparent 26%),
-    linear-gradient(180deg, #112a44 0%, #0a1727 60%, #08111d 100%);
+    radial-gradient(circle at 50% 30%, rgba(99, 246, 214, 0.08), transparent 26%),
+    linear-gradient(180deg, #334c68 0%, #23384f 28%, #142333 56%, #09111b 100%);
+  box-shadow: inset 0 -40px 90px rgba(0, 0, 0, 0.28);
 }
 
 .pov-horizon,
+.pov-skyline,
 .pov-ground,
+.pov-street,
 .pov-grid,
+.pov-lane,
+.pov-portal-rings,
+.pov-scan-arc,
 .pov-reticle,
 .pov-signal-beam,
 .pov-cache-glow,
 .pov-portal-core,
 .pov-prize-shell,
 .pov-prize-tag,
+.pov-reward-panel,
 .pov-hud {
   position: absolute;
 }
@@ -513,11 +520,58 @@ h4 {
     linear-gradient(180deg, rgba(94, 145, 189, 0.15), transparent 78%);
 }
 
+.pov-skyline {
+  inset: 36% 0 auto 0;
+  height: 25%;
+  z-index: 1;
+}
+
+.skyline-bldg {
+  position: absolute;
+  bottom: 0;
+  width: 10%;
+  background: linear-gradient(180deg, rgba(18, 33, 49, 0.68), rgba(6, 12, 20, 0.94));
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.skyline-bldg-a {
+  left: 4%;
+  height: 62%;
+}
+
+.skyline-bldg-b {
+  left: 18%;
+  height: 78%;
+}
+
+.skyline-bldg-c {
+  left: 38%;
+  height: 52%;
+}
+
+.skyline-bldg-d {
+  right: 20%;
+  height: 84%;
+}
+
+.skyline-bldg-e {
+  right: 6%;
+  height: 58%;
+}
+
 .pov-ground {
   inset: 58% 0 0 0;
   background:
     linear-gradient(180deg, rgba(7, 17, 30, 0), rgba(4, 11, 19, 0.95)),
     radial-gradient(circle at 50% 0%, rgba(99, 246, 214, 0.12), transparent 52%);
+}
+
+.pov-street {
+  inset: 56% 12% 0 12%;
+  background:
+    linear-gradient(180deg, rgba(8, 17, 31, 0.2), rgba(3, 9, 16, 0.95)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
 }
 
 .pov-grid {
@@ -529,6 +583,53 @@ h4 {
   transform: perspective(500px) rotateX(72deg);
   transform-origin: top center;
   opacity: 0.62;
+}
+
+.pov-lane {
+  bottom: -2%;
+  width: 3px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  transform-origin: bottom center;
+  opacity: 0.5;
+}
+
+.pov-lane-a {
+  left: 39%;
+  height: 56%;
+  transform: rotate(20deg);
+}
+
+.pov-lane-b {
+  left: 50%;
+  height: 64%;
+}
+
+.pov-lane-c {
+  right: 39%;
+  height: 56%;
+  transform: rotate(-20deg);
+}
+
+.pov-portal-rings {
+  left: 50%;
+  bottom: 30%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(99, 246, 214, 0.18);
+  box-shadow:
+    0 0 0 24px rgba(99, 246, 214, 0.04),
+    0 0 0 52px rgba(99, 246, 214, 0.025);
+  opacity: 0.16;
+}
+
+.pov-scan-arc {
+  inset: -24% -16% auto -16%;
+  height: 84%;
+  background: conic-gradient(from 270deg, rgba(99, 246, 214, 0.24), transparent 42%);
+  animation: spin 8s linear infinite;
+  opacity: 0.46;
 }
 
 .pov-reticle {
@@ -565,7 +666,7 @@ h4 {
 
 .pov-signal-beam {
   left: 50%;
-  bottom: 26%;
+  bottom: 24%;
   width: 180px;
   height: 180px;
   transform: translateX(-50%);
@@ -649,6 +750,30 @@ h4 {
   transition: opacity 220ms ease, transform 220ms ease;
 }
 
+.pov-reward-panel {
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(7, 17, 31, 0.82), rgba(7, 17, 31, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 220ms ease, transform 220ms ease;
+  z-index: 2;
+}
+
+.pov-reward-panel h4 {
+  margin: 6px 0 6px;
+}
+
+.pov-reward-panel p:last-child {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .pov-hud {
   left: 18px;
   right: 18px;
@@ -665,6 +790,7 @@ h4 {
 .pov-hud-bottom {
   bottom: 18px;
   align-items: end;
+  transition: opacity 220ms ease, transform 220ms ease;
 }
 
 .pov-hud-pill {
@@ -695,6 +821,10 @@ h4 {
   opacity: 0.16;
 }
 
+.player-pov-viewport[data-scene="scan"] .pov-scan-arc {
+  opacity: 0.54;
+}
+
 .player-pov-viewport[data-scene="approach"] .pov-signal-beam {
   opacity: 0.7;
 }
@@ -702,6 +832,10 @@ h4 {
 .player-pov-viewport[data-scene="approach"] .pov-cache-glow {
   opacity: 0.48;
   transform: translateX(-50%) scale(1.1);
+}
+
+.player-pov-viewport[data-scene="approach"] .pov-portal-rings {
+  opacity: 0.28;
 }
 
 .player-pov-viewport[data-scene="lock"] .pov-cache-glow {
@@ -715,18 +849,30 @@ h4 {
     0 0 40px rgba(99, 246, 214, 0.34);
 }
 
+.player-pov-viewport[data-scene="lock"] .pov-portal-rings {
+  opacity: 0.42;
+}
+
 .player-pov-viewport[data-scene="portal"] .pov-cache-glow {
   opacity: 0;
 }
 
 .player-pov-viewport[data-scene="portal"] .pov-portal-core {
   opacity: 1;
-  transform: translateX(-50%) scale(1.02);
+  transform: translateX(-50%) scale(1.08);
+}
+
+.player-pov-viewport[data-scene="portal"] .pov-portal-rings {
+  opacity: 0.62;
+}
+
+.player-pov-viewport[data-scene="portal"] .pov-scan-arc {
+  opacity: 0.18;
 }
 
 .player-pov-viewport[data-scene="reward"] .pov-portal-core {
-  opacity: 0.3;
-  transform: translateX(-50%) scale(0.9);
+  opacity: 0.18;
+  transform: translateX(-50%) scale(0.84);
 }
 
 .player-pov-viewport[data-scene="reward"] .pov-prize-shell,
@@ -738,6 +884,17 @@ h4 {
   transform: translateX(-50%) translateY(-12px) scale(1.04);
 }
 
+.player-pov-viewport[data-scene="reward"] .pov-reticle,
+.player-pov-viewport[data-scene="reward"] .pov-hud-bottom {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.player-pov-viewport[data-scene="reward"] .pov-reward-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .city-map {
   position: relative;
   min-height: 420px;
@@ -746,39 +903,235 @@ h4 {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(circle at 25% 20%, rgba(99, 246, 214, 0.18), transparent 24%),
-    radial-gradient(circle at 68% 62%, rgba(255, 126, 146, 0.22), transparent 18%),
-    linear-gradient(180deg, #0c233e 0%, #081728 100%);
+    radial-gradient(circle at 25% 20%, rgba(99, 246, 214, 0.14), transparent 24%),
+    radial-gradient(circle at 68% 62%, rgba(255, 126, 146, 0.16), transparent 18%),
+    linear-gradient(180deg, #173652 0%, #0d2034 52%, #0a1727 100%);
+}
+
+.city-map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 22%, rgba(255, 255, 255, 0.08), transparent 12%),
+    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.06), transparent 13%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 38%);
+  pointer-events: none;
+}
+
+.map-waterfront,
+.map-park,
+.map-road,
+.map-block,
+.map-story-chip,
+.map-legend,
+.map-label {
+  position: absolute;
+  z-index: 1;
+}
+
+.map-waterfront {
+  inset: 0 auto 0 0;
+  width: 22%;
+  background:
+    linear-gradient(180deg, rgba(88, 199, 255, 0.34), rgba(23, 80, 118, 0.28)),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0,
+      rgba(255, 255, 255, 0.05) 12px,
+      transparent 12px,
+      transparent 24px
+    );
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.map-park {
+  border-radius: 999px;
+  background: rgba(102, 172, 116, 0.18);
+  border: 1px solid rgba(140, 214, 140, 0.16);
+}
+
+.map-park-a {
+  top: 16%;
+  right: 20%;
+  width: 22%;
+  height: 14%;
+}
+
+.map-park-b {
+  bottom: 18%;
+  left: 34%;
+  width: 18%;
+  height: 11%;
+}
+
+.map-road {
+  background: rgba(235, 243, 255, 0.22);
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px rgba(9, 17, 29, 0.14);
+}
+
+.map-road-a {
+  top: 18%;
+  left: 18%;
+  width: 72%;
+  height: 14px;
+}
+
+.map-road-b {
+  top: 46%;
+  left: 20%;
+  width: 64%;
+  height: 14px;
+}
+
+.map-road-c {
+  top: 12%;
+  left: 46%;
+  width: 14px;
+  height: 72%;
+}
+
+.map-road-d {
+  top: 26%;
+  right: 18%;
+  width: 14px;
+  height: 58%;
+}
+
+.map-block {
+  background: rgba(7, 17, 30, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.map-block-a {
+  top: 26%;
+  left: 28%;
+  width: 16%;
+  height: 16%;
+}
+
+.map-block-b {
+  top: 28%;
+  left: 56%;
+  width: 18%;
+  height: 14%;
+}
+
+.map-block-c {
+  top: 54%;
+  left: 30%;
+  width: 14%;
+  height: 17%;
+}
+
+.map-block-d {
+  top: 60%;
+  left: 58%;
+  width: 20%;
+  height: 13%;
 }
 
 .grid-overlay {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 54px 54px;
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 46px 46px;
+  z-index: 0;
 }
 
 .route-line {
   position: absolute;
   height: 2px;
-  background: linear-gradient(90deg, rgba(99, 246, 214, 0.15), rgba(99, 246, 214, 0.9));
+  background: linear-gradient(90deg, rgba(99, 246, 214, 0.08), rgba(99, 246, 214, 0.96));
   transform-origin: left center;
+  z-index: 2;
 }
 
 .route-line-a {
   top: 34%;
   left: 31%;
-  width: 35%;
-  transform: rotate(16deg);
+  width: 30%;
+  transform: rotate(7deg);
 }
 
 .route-line-b {
-  top: 58%;
+  top: 60%;
   left: 46%;
-  width: 36%;
-  transform: rotate(28deg);
+  width: 32%;
+  transform: rotate(12deg);
+}
+
+.map-story-chip {
+  top: 18px;
+  left: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(7, 17, 31, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-size: 0.86rem;
+}
+
+.map-legend {
+  top: 18px;
+  right: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(7, 17, 31, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.legend-pill::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.legend-pill:last-child::before {
+  background: var(--aqua);
+}
+
+.map-label {
+  color: rgba(231, 242, 255, 0.68);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.map-label-a {
+  top: 26%;
+  left: 18%;
+}
+
+.map-label-b {
+  top: 30%;
+  left: 55%;
+}
+
+.map-label-c {
+  top: 66%;
+  left: 36%;
+}
+
+.map-label-d {
+  top: 72%;
+  right: 10%;
 }
 
 .hotspot {
@@ -789,6 +1142,7 @@ h4 {
   color: var(--text);
   background: rgba(8, 17, 31, 0.72);
   backdrop-filter: blur(10px);
+  z-index: 3;
 }
 
 .hotspot.active {
@@ -806,6 +1160,17 @@ h4 {
   box-shadow: 0 0 0 0 rgba(255, 199, 101, 0.42);
   animation: pulse 2.4s infinite;
   transition: top 240ms ease, left 240ms ease;
+  z-index: 4;
+}
+
+.city-map[data-scene="approach"] .user-pulse,
+.city-map[data-scene="lock"] .user-pulse {
+  background: var(--aqua);
+}
+
+.city-map[data-scene="portal"] .route-line,
+.city-map[data-scene="reward"] .route-line {
+  filter: drop-shadow(0 0 10px rgba(99, 246, 214, 0.4));
 }
 
 .side-card,
