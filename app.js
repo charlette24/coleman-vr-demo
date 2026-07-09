@@ -241,6 +241,15 @@ const el = {
   walkthroughStage: document.getElementById("walkthrough-stage"),
   walkthroughCurrentStep: document.getElementById("walkthrough-current-step"),
   walkthroughList: document.getElementById("walkthrough-list"),
+  povViewport: document.getElementById("player-pov-viewport"),
+  povTitle: document.getElementById("pov-title"),
+  povDevice: document.getElementById("pov-device"),
+  povStatus: document.getElementById("pov-status"),
+  povDistance: document.getElementById("pov-distance"),
+  povCopy: document.getElementById("pov-copy"),
+  povHighlightA: document.getElementById("pov-highlight-a"),
+  povHighlightB: document.getElementById("pov-highlight-b"),
+  povHighlightC: document.getElementById("pov-highlight-c"),
 };
 
 function createVoucherCode(locationKey, sponsorLabel) {
@@ -248,6 +257,18 @@ function createVoucherCode(locationKey, sponsorLabel) {
   const sponsorCode = sponsorLabel.replace("Sponsored by ", "").slice(0, 2).toUpperCase();
   const random = Math.random().toString(36).slice(2, 8).toUpperCase();
   return `CVR-${locationCode}-${sponsorCode}-${random}`;
+}
+
+function renderPlayerPov(pov) {
+  el.povViewport.dataset.scene = pov.scene;
+  el.povTitle.textContent = pov.title;
+  el.povDevice.textContent = pov.device;
+  el.povStatus.textContent = pov.status;
+  el.povDistance.textContent = pov.distance;
+  el.povCopy.textContent = pov.copy;
+  el.povHighlightA.textContent = pov.highlightA;
+  el.povHighlightB.textContent = pov.highlightB;
+  el.povHighlightC.textContent = pov.highlightC;
 }
 
 function buildWalkthroughSteps(locationKey) {
@@ -265,6 +286,18 @@ function buildWalkthroughSteps(locationKey) {
         "The engine starts warming up device signals, route context, and anti-spoof scoring before the player arrives.",
       rewardCopy: "Prize inventory stays hidden until the player proves they are physically present in the zone.",
       current: "Ava opens the app and picks a nearby hunt.",
+      pov: {
+        scene: "scan",
+        title: "Ava scans the real world for the active hunt",
+        device: data.mode,
+        status: "Search mode live",
+        distance: data.distance,
+        copy:
+          "Her camera view overlays a live search corridor, showing that a hidden digital cache is somewhere ahead on the waterfront.",
+        highlightA: "Camera feed enhanced",
+        highlightB: "Spatial scan warming up",
+        highlightC: "Prize still concealed",
+      },
     },
     {
       title: "Geofence confidence rises",
@@ -277,6 +310,18 @@ function buildWalkthroughSteps(locationKey) {
         "The platform blends live device telemetry and world anchors to confirm the player is genuinely on-site.",
       rewardCopy: "The reward pool is reserved but still concealed until the final proximity threshold is met.",
       current: "Ava approaches the cache and the zone begins validating her location.",
+      pov: {
+        scene: "approach",
+        title: "Directional signals tighten around the hidden cache",
+        device: data.mode,
+        status: "Proximity lock increasing",
+        distance: "12m away",
+        copy:
+          "The player sees the reticle strengthen and a faint glow emerge in the environment, guiding them toward the exact prize zone.",
+        highlightA: "Motion verified",
+        highlightB: "Route confidence rising",
+        highlightC: "Branded cache warming up",
+      },
     },
     {
       title: "The 3D cache materializes",
@@ -289,6 +334,18 @@ function buildWalkthroughSteps(locationKey) {
         "Once confidence crosses the threshold, the SDK triggers the branded 3D cache inside mobile AR or VR.",
       rewardCopy: "The sponsor reveal is now fully interactive, with telemetry firing for dwell time and engagement.",
       current: "Ava sees the floating cache appear in front of her.",
+      pov: {
+        scene: "lock",
+        title: "The cache locks into view in the player's world",
+        device: data.mode,
+        status: "Cache in visual range",
+        distance: "3m away",
+        copy:
+          "Now the experience feels magical: a luminous object stabilizes in real space, inviting the player to step closer and interact.",
+        highlightA: "Geofence validated",
+        highlightB: "3D anchor snapped",
+        highlightC: "Interaction prompt armed",
+      },
     },
     {
       title: "Prize reveal lands",
@@ -301,6 +358,18 @@ function buildWalkthroughSteps(locationKey) {
         "The reward engine now records a verified unlock event tied to location, device type, and campaign metadata.",
       rewardCopy: `The system reveals ${data.rewardTitle} and tags the claim to ${data.sponsor} for ROI reporting.`,
       current: `Ava wins ${data.rewardTitle} in the live reveal.`,
+      pov: {
+        scene: "portal",
+        title: "A sponsor-branded portal opens in front of the player",
+        device: data.mode,
+        status: "Reveal sequence live",
+        distance: "At target",
+        copy:
+          "The cache blossoms into a dramatic portal animation, giving the player a real sense that they have unlocked something scarce and valuable.",
+        highlightA: "Branded 3D effect",
+        highlightB: "Telemetry capture live",
+        highlightC: "Reward reveal unfolding",
+      },
     },
     {
       title: "Voucher and analytics are issued",
@@ -313,6 +382,18 @@ function buildWalkthroughSteps(locationKey) {
         "The claim is signed, attached to the player session, and synchronized to sponsor dashboards in real time.",
       rewardCopy: "A redeemable voucher now sits in the player's wallet and the sponsor sees the conversion immediately.",
       current: "Ava receives her voucher and the sponsor gets a measurable win.",
+      pov: {
+        scene: "reward",
+        title: "The win screen lands with a real prize claim",
+        device: data.mode,
+        status: "Reward secured",
+        distance: "Claim complete",
+        copy:
+          "Instead of just points, the player sees the prize they won, receives a claim confirmation, and feels the payoff of the exploration loop immediately.",
+        highlightA: "Voucher issued",
+        highlightB: "Wallet updated",
+        highlightC: "Sponsor conversion recorded",
+      },
     },
   ];
 }
@@ -361,6 +442,7 @@ function applyWalkthroughStep(step) {
   el.geofenceStatus.textContent = step.geofenceStatus;
   el.geofenceCopy.textContent = step.geofenceCopy;
   el.rewardCopy.textContent = step.rewardCopy;
+  renderPlayerPov(step.pov);
 
   if (state.walkthroughStepIndex < 4) {
     el.voucherCode.textContent = "Voucher pending";
@@ -448,6 +530,18 @@ function renderLocation(locationKey) {
   el.voucherRedemption.textContent = data.analytics.redemption;
   el.dwellTime.textContent = data.analytics.dwell;
   el.socialShares.textContent = data.analytics.shares;
+  renderPlayerPov({
+    scene: "scan",
+    title: `Player view for ${data.title}`,
+    device: data.mode,
+    status: "Ready to start hunt",
+    distance: data.distance,
+    copy:
+      "This is the player's live AR or VR-facing view before the walkthrough begins. Press the winning journey button to watch the full hunt play out.",
+    highlightA: "Nearby hunt loaded",
+    highlightB: "Geofence listening",
+    highlightC: "Reward hidden until unlock",
+  });
   renderWalkthroughPanel();
 }
 

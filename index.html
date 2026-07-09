@@ -184,6 +184,47 @@
                         <p class="metric-value" id="accuracy-label">98.4%</p>
                       </div>
                     </div>
+
+                    <div class="player-pov-card">
+                      <div class="panel-header">
+                        <div>
+                          <p class="panel-label">Player POV</p>
+                          <h3 id="pov-title">Scanning the waterfront for a live cache</h3>
+                        </div>
+                        <span class="chip chip-live" id="pov-device">Phone AR feed</span>
+                      </div>
+
+                      <div class="player-pov-viewport" id="player-pov-viewport" data-scene="scan">
+                        <div class="pov-horizon"></div>
+                        <div class="pov-ground"></div>
+                        <div class="pov-grid"></div>
+                        <div class="pov-reticle"></div>
+                        <div class="pov-signal-beam"></div>
+                        <div class="pov-cache-glow"></div>
+                        <div class="pov-portal-core"></div>
+                        <div class="pov-prize-shell"></div>
+                        <div class="pov-prize-tag">Prize unlocked</div>
+                        <div class="pov-hud pov-hud-top">
+                          <span class="pov-hud-pill" id="pov-status">Scanning for geofence</span>
+                          <span class="pov-hud-pill" id="pov-distance">42m away</span>
+                        </div>
+                        <div class="pov-hud pov-hud-bottom">
+                          <div>
+                            <p class="metric-label">What the player sees</p>
+                            <p class="pov-copy" id="pov-copy">
+                              The camera feed highlights the search corridor and hints that a live
+                              cache is hidden just ahead.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="pov-highlight-row">
+                        <span class="reward-pill" id="pov-highlight-a">Search corridor active</span>
+                        <span class="reward-pill" id="pov-highlight-b">Spatial scan warming up</span>
+                        <span class="reward-pill" id="pov-highlight-c">Reward still hidden</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="panel surface-side">

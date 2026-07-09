@@ -470,6 +470,274 @@ h4 {
   gap: 24px;
 }
 
+.player-pov-card {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(9, 24, 43, 0.94), rgba(6, 16, 29, 0.92)),
+    radial-gradient(circle at top left, rgba(88, 199, 255, 0.14), transparent 36%);
+  border: 1px solid var(--line);
+}
+
+.player-pov-viewport {
+  position: relative;
+  min-height: 330px;
+  margin: 20px 0 16px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(99, 246, 214, 0.08), transparent 26%),
+    linear-gradient(180deg, #112a44 0%, #0a1727 60%, #08111d 100%);
+}
+
+.pov-horizon,
+.pov-ground,
+.pov-grid,
+.pov-reticle,
+.pov-signal-beam,
+.pov-cache-glow,
+.pov-portal-core,
+.pov-prize-shell,
+.pov-prize-tag,
+.pov-hud {
+  position: absolute;
+}
+
+.pov-horizon {
+  inset: 0 0 38% 0;
+  background:
+    radial-gradient(circle at 22% 40%, rgba(255, 255, 255, 0.08), transparent 12%),
+    radial-gradient(circle at 76% 34%, rgba(255, 255, 255, 0.07), transparent 13%),
+    linear-gradient(180deg, rgba(94, 145, 189, 0.15), transparent 78%);
+}
+
+.pov-ground {
+  inset: 58% 0 0 0;
+  background:
+    linear-gradient(180deg, rgba(7, 17, 30, 0), rgba(4, 11, 19, 0.95)),
+    radial-gradient(circle at 50% 0%, rgba(99, 246, 214, 0.12), transparent 52%);
+}
+
+.pov-grid {
+  inset: 56% -8% -18% -8%;
+  background-image:
+    linear-gradient(rgba(99, 246, 214, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 246, 214, 0.16) 1px, transparent 1px);
+  background-size: 54px 54px;
+  transform: perspective(500px) rotateX(72deg);
+  transform-origin: top center;
+  opacity: 0.62;
+}
+
+.pov-reticle {
+  top: 46%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(214, 255, 245, 0.78);
+  box-shadow:
+    0 0 0 10px rgba(99, 246, 214, 0.08),
+    0 0 28px rgba(99, 246, 214, 0.24);
+}
+
+.pov-reticle::before,
+.pov-reticle::after {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(214, 255, 245, 0.8);
+}
+
+.pov-reticle::before {
+  width: 2px;
+  height: 124px;
+}
+
+.pov-reticle::after {
+  width: 124px;
+  height: 2px;
+}
+
+.pov-signal-beam {
+  left: 50%;
+  bottom: 26%;
+  width: 180px;
+  height: 180px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 246, 214, 0.28), transparent 58%);
+  opacity: 0.48;
+}
+
+.pov-cache-glow,
+.pov-portal-core,
+.pov-prize-shell {
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+.pov-cache-glow {
+  bottom: 30%;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 246, 214, 0.95), rgba(99, 246, 214, 0.12));
+  box-shadow: 0 0 28px rgba(99, 246, 214, 0.42);
+  opacity: 0.12;
+}
+
+.pov-portal-core {
+  bottom: 22%;
+  width: 140px;
+  height: 170px;
+  border-radius: 48% 48% 38% 38%;
+  border: 2px solid rgba(88, 199, 255, 0.72);
+  background:
+    radial-gradient(circle at 50% 38%, rgba(214, 255, 245, 0.72), rgba(88, 199, 255, 0.22) 48%, transparent 68%),
+    linear-gradient(180deg, rgba(88, 199, 255, 0.24), rgba(88, 199, 255, 0.04));
+  box-shadow: 0 0 48px rgba(88, 199, 255, 0.22);
+  opacity: 0;
+}
+
+.pov-prize-shell {
+  bottom: 21%;
+  width: 164px;
+  height: 110px;
+  border-radius: 26px;
+  background:
+    linear-gradient(135deg, rgba(255, 199, 101, 0.98), rgba(255, 126, 146, 0.85)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent);
+  box-shadow: 0 28px 50px rgba(255, 126, 146, 0.18);
+  opacity: 0;
+}
+
+.pov-prize-shell::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+.pov-prize-shell::after {
+  content: "LG";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(7, 17, 31, 0.82);
+}
+
+.pov-prize-tag {
+  right: 22px;
+  top: 22px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #08111d;
+  background: linear-gradient(135deg, var(--gold), #ffe8b4);
+  font-weight: 700;
+  font-size: 0.84rem;
+  opacity: 0;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.pov-hud {
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 2;
+}
+
+.pov-hud-top {
+  top: 18px;
+}
+
+.pov-hud-bottom {
+  bottom: 18px;
+  align-items: end;
+}
+
+.pov-hud-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(7, 17, 31, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  font-size: 0.84rem;
+}
+
+.pov-copy {
+  margin-top: 8px;
+  max-width: 42ch;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.pov-highlight-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.player-pov-viewport[data-scene="scan"] .pov-cache-glow {
+  opacity: 0.16;
+}
+
+.player-pov-viewport[data-scene="approach"] .pov-signal-beam {
+  opacity: 0.7;
+}
+
+.player-pov-viewport[data-scene="approach"] .pov-cache-glow {
+  opacity: 0.48;
+  transform: translateX(-50%) scale(1.1);
+}
+
+.player-pov-viewport[data-scene="lock"] .pov-cache-glow {
+  opacity: 0.88;
+  transform: translateX(-50%) scale(1.24);
+}
+
+.player-pov-viewport[data-scene="lock"] .pov-reticle {
+  box-shadow:
+    0 0 0 10px rgba(99, 246, 214, 0.16),
+    0 0 40px rgba(99, 246, 214, 0.34);
+}
+
+.player-pov-viewport[data-scene="portal"] .pov-cache-glow {
+  opacity: 0;
+}
+
+.player-pov-viewport[data-scene="portal"] .pov-portal-core {
+  opacity: 1;
+  transform: translateX(-50%) scale(1.02);
+}
+
+.player-pov-viewport[data-scene="reward"] .pov-portal-core {
+  opacity: 0.3;
+  transform: translateX(-50%) scale(0.9);
+}
+
+.player-pov-viewport[data-scene="reward"] .pov-prize-shell,
+.player-pov-viewport[data-scene="reward"] .pov-prize-tag {
+  opacity: 1;
+}
+
+.player-pov-viewport[data-scene="reward"] .pov-prize-shell {
+  transform: translateX(-50%) translateY(-12px) scale(1.04);
+}
+
 .city-map {
   position: relative;
   min-height: 420px;
