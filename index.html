@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coleman VR | Investor Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand-lockup">
+            <div class="brand-mark">CVR</div>
+            <div>
+              <p class="eyebrow">Location-driven AR/VR scavenger hunts</p>
+              <h1>Coleman VR</h1>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <a href="#experience" class="ghost-link">Live experience</a>
+            <a href="#platform" class="ghost-link">Platform stack</a>
+            <button class="primary-button" id="launch-demo">Launch investor demo</button>
+          </div>
+        </nav>
+
+        <section class="hero-content">
+          <div class="hero-copy">
+            <p class="section-tag">Mass-market exploration gaming</p>
+            <h2>
+              Turn every city block, campus, mall, and theme park into a sponsored AR/VR treasure
+              hunt.
+            </h2>
+            <p class="hero-text">
+              Players discover hidden digital caches from any smartphone, tablet, desktop, or VR
+              headset. Sponsors fund real-world prizes, while developers plug immersive 3D
+              experiences into an open SDK and geofencing engine built for massive concurrency.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" data-target-tab="player">Show player journey</button>
+              <button class="secondary-button" data-target-tab="sdk">Show SDK + APIs</button>
+            </div>
+            <ul class="hero-points">
+              <li>Real-time geofencing for precise cache placement and anti-spoof guardrails</li>
+              <li>Open SDK for Meta worlds, WebXR, Unity, and mobile AR surfaces</li>
+              <li>Unified prize layer for inventory, vouchers, redemption, and sponsor analytics</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual">
+            <div class="signal-panel">
+              <div class="signal-header">
+                <span>Live Hunt Network</span>
+                <span class="online-dot">Millions-ready</span>
+              </div>
+              <div class="radar">
+                <div class="radar-ring ring-1"></div>
+                <div class="radar-ring ring-2"></div>
+                <div class="radar-ring ring-3"></div>
+                <div class="radar-sweep"></div>
+                <button class="map-pin pin-a" data-location="seattle" aria-label="Seattle cache"></button>
+                <button class="map-pin pin-b" data-location="miami" aria-label="Miami cache"></button>
+                <button class="map-pin pin-c" data-location="austin" aria-label="Austin cache"></button>
+                <button class="map-pin pin-d" data-location="denver" aria-label="Denver cache"></button>
+              </div>
+              <div class="signal-footer">
+                <div>
+                  <p class="metric-label">Active participants</p>
+                  <p class="metric-value" id="hero-players">1.8M</p>
+                </div>
+                <div>
+                  <p class="metric-label">Prize claim rate</p>
+                  <p class="metric-value" id="hero-claims">73%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section class="story-strip">
+          <article class="story-card">
+            <p class="section-tag">For explorers</p>
+            <h3>Discovery loops people already understand</h3>
+            <p>
+              Open the app, see nearby hunts, move into live geofences, unlock an AR or VR cache,
+              and claim sponsor-backed rewards.
+            </p>
+          </article>
+          <article class="story-card">
+            <p class="section-tag">For sponsors</p>
+            <h3>Rewards become acquisition channels</h3>
+            <p>
+              Campaigns tie prizes to foot traffic, dwell time, redemption, and community sharing
+              instead of passive impressions.
+            </p>
+          </article>
+          <article class="story-card">
+            <p class="section-tag">For developers</p>
+            <h3>World-building without platform lock-in</h3>
+            <p>
+              Publish immersive 3D caches, world triggers, and branded experiences through an open
+              integration layer.
+            </p>
+          </article>
+        </section>
+
+        <section class="experience-section" id="experience">
+          <div class="section-heading">
+            <div>
+              <p class="section-tag">Interactive prototype</p>
+              <h2>Show the consumer app, sponsor console, and platform APIs in one flow</h2>
+            </div>
+            <p class="section-note">
+              Switch between views to walk investors through the full ecosystem.
+            </p>
+          </div>
+
+          <div class="tab-shell">
+            <div class="tab-list" role="tablist" aria-label="Prototype views">
+              <button class="tab-button active" data-tab="player" role="tab" aria-selected="true">
+                Explorer app
+              </button>
+              <button class="tab-button" data-tab="sponsor" role="tab" aria-selected="false">
+                Sponsor console
+              </button>
+              <button class="tab-button" data-tab="sdk" role="tab" aria-selected="false">
+                SDK + APIs
+              </button>
+            </div>
+
+            <div class="tab-panels">
+              <section class="tab-panel active" id="panel-player" role="tabpanel">
+                <div class="experience-grid">
+                  <div class="panel surface-map">
+                    <div class="panel-header">
+                      <div>
+                        <p class="panel-label">Nearby hunts</p>
+                        <h3 id="location-title">Seattle Waterfront Night Run</h3>
+                      </div>
+                      <div class="chip-row">
+                        <span class="chip chip-live">Live geofences</span>
+                        <span class="chip">Mobile + VR</span>
+                      </div>
+                    </div>
+
+                    <div class="city-map" id="city-map">
+                      <div class="grid-overlay"></div>
+                      <div class="route-line route-line-a"></div>
+                      <div class="route-line route-line-b"></div>
+                      <button class="hotspot active" data-location="seattle" style="top: 22%; left: 31%;">
+                        <span>01</span>
+                      </button>
+                      <button class="hotspot" data-location="denver" style="top: 39%; left: 58%;">
+                        <span>02</span>
+                      </button>
+                      <button class="hotspot" data-location="austin" style="top: 61%; left: 45%;">
+                        <span>03</span>
+                      </button>
+                      <button class="hotspot" data-location="miami" style="top: 72%; left: 79%;">
+                        <span>04</span>
+                      </button>
+                      <div class="user-pulse" id="user-pulse"></div>
+                    </div>
+
+                    <div class="map-footer">
+                      <div>
+                        <p class="metric-label">Player mode</p>
+                        <p class="metric-value" id="player-mode">Phone AR</p>
+                      </div>
+                      <div>
+                        <p class="metric-label">Distance to cache</p>
+                        <p class="metric-value" id="distance-label">42 meters</p>
+                      </div>
+                      <div>
+                        <p class="metric-label">Accuracy confidence</p>
+                        <p class="metric-value" id="accuracy-label">98.4%</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel surface-side">
+                    <div class="side-card">
+                      <p class="panel-label">Geofence engine</p>
+                      <h3 id="geofence-status">Ready to unlock the waterfront portal</h3>
+                      <p id="geofence-copy">
+                        Multi-signal verification blends GPS, device motion, timestamp drift, and
+                        local world anchors to prevent spoofing and keep cache placement precise.
+                      </p>
+                      <div class="progress-stack">
+                        <div>
+                          <div class="progress-label-row">
+                            <span>Zone entry verification</span>
+                            <span id="entry-percent">92%</span>
+                          </div>
+                          <div class="progress-bar">
+                            <div class="progress-fill" id="entry-fill" style="width: 92%;"></div>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="progress-label-row">
+                            <span>3D cache materialization</span>
+                            <span id="cache-percent">67%</span>
+                          </div>
+                          <div class="progress-bar">
+                            <div class="progress-fill alt" id="cache-fill" style="width: 67%;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="side-card reward-card">
+                      <p class="panel-label">Unlocked reward</p>
+                      <h3 id="reward-title">LG OLED Evo 55"</h3>
+                      <p id="reward-copy">
+                        Premium sponsor reward seeded into a night exploration campaign to convert
+                        discovery into measurable engagement.
+                      </p>
+                      <div class="reward-meta">
+                        <span class="reward-pill" id="reward-sponsor">Sponsored by LG</span>
+                        <span class="reward-pill" id="reward-rarity">Legendary drop</span>
+                      </div>
+                      <button class="primary-button full-width" id="claim-reward">Generate investor demo voucher</button>
+                      <p class="voucher-code" id="voucher-code">Voucher pending</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="tab-panel" id="panel-sponsor" role="tabpanel">
+                <div class="experience-grid sponsor-grid">
+                  <div class="panel">
+                    <div class="panel-header">
+                      <div>
+                        <p class="panel-label">Sponsor campaign control</p>
+                        <h3>Reward inventory and conversion analytics</h3>
+                      </div>
+                      <span class="chip chip-live">Unified prize layer</span>
+                    </div>
+
+                    <div class="inventory-list" id="inventory-list"></div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="panel-header">
+                      <div>
+                        <p class="panel-label">Campaign insights</p>
+                        <h3 id="analytics-title">Seattle launch performance</h3>
+                      </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                      <div class="analytics-card">
+                        <p class="metric-label">Foot-traffic lift</p>
+                        <p class="metric-value" id="traffic-lift">+28%</p>
+                      </div>
+                      <div class="analytics-card">
+                        <p class="metric-label">Voucher redemption</p>
+                        <p class="metric-value" id="voucher-redemption">71%</p>
+                      </div>
+                      <div class="analytics-card">
+                        <p class="metric-label">Avg. dwell time</p>
+                        <p class="metric-value" id="dwell-time">19 min</p>
+                      </div>
+                      <div class="analytics-card">
+                        <p class="metric-label">Social shares</p>
+                        <p class="metric-value" id="social-shares">84K</p>
+                      </div>
+                    </div>
+
+                    <div class="timeline-card">
+                      <p class="panel-label">Live event sequence</p>
+                      <div class="timeline-list" id="timeline-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="tab-panel" id="panel-sdk" role="tabpanel">
+                <div class="experience-grid sdk-grid">
+                  <div class="panel">
+                    <div class="panel-header">
+                      <div>
+                        <p class="panel-label">Open integration stack</p>
+                        <h3>Embed a cache into mobile AR, WebXR, or Meta worlds</h3>
+                      </div>
+                      <span class="chip">SDK preview</span>
+                    </div>
+
+                    <div class="sdk-card-list">
+                      <article class="sdk-card">
+                        <h4>Geofencing service</h4>
+                        <p>Low-latency zone validation, spoof detection, and cache trigger orchestration.</p>
+                      </article>
+                      <article class="sdk-card">
+                        <h4>Interactive cache SDK</h4>
+                        <p>3D cache prefabs, reward reveals, telemetry hooks, and shared player identity.</p>
+                      </article>
+                      <article class="sdk-card">
+                        <h4>Prize management API</h4>
+                        <p>Inventory sync, voucher issuance, claim validation, campaign reporting, and partner exports.</p>
+                      </article>
+                    </div>
+
+                    <div class="code-window">
+                      <div class="code-header">
+                        <span>cache-sdk.ts</span>
+                        <button class="secondary-button slim-button" id="cycle-snippet">Cycle snippet</button>
+                      </div>
+                      <pre><code id="sdk-snippet"></code></pre>
+                    </div>
+                  </div>
+
+                  <div class="panel architecture-panel" id="platform">
+                    <div class="panel-header">
+                      <div>
+                        <p class="panel-label">Scalable backend story</p>
+                        <h3>What investors should hear in one minute</h3>
+                      </div>
+                    </div>
+
+                    <div class="architecture-flow">
+                      <div class="flow-node">
+                        <span class="flow-kicker">Clients</span>
+                        <strong>iOS, Android, Tablet, Web, Meta VR</strong>
+                      </div>
+                      <div class="flow-arrow">→</div>
+                      <div class="flow-node">
+                        <span class="flow-kicker">Realtime edge</span>
+                        <strong>Geofence validation + session routing</strong>
+                      </div>
+                      <div class="flow-arrow">→</div>
+                      <div class="flow-node">
+                        <span class="flow-kicker">Core platform</span>
+                        <strong>Cache state, rewards, identity, analytics</strong>
+                      </div>
+                    </div>
+
+                    <div class="quote-card">
+                      <p>
+                        “Coleman VR makes the physical world programmable for game designers,
+                        brands, and venue operators. Every location becomes an addressable game
+                        surface with measurable ROI.”
+                      </p>
+                    </div>
+
+                    <div class="checklist">
+                      <div class="check-item">Millions of simultaneous participants through event sharding and edge session fan-out</div>
+                      <div class="check-item">Modular geofencing service deployable as an API for third-party worlds and venues</div>
+                      <div class="check-item">Sponsor-facing reporting that ties rewards directly to movement, discovery, and redemption</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
